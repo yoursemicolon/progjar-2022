@@ -31,7 +31,7 @@ class FileInterface:
             filename = params[0]
             encodefile = params[1]
             # decode file
-            decodefile = base64.b64decode(params[1])
+            decodefile = base64.b64decode(encodefile)
             fp = open(f"{filename}", 'xb')
             fp.write(decodefile)
             fp.close()
