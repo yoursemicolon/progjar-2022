@@ -23,9 +23,11 @@ class ProcessTheClient(threading.Thread):
             if data:
                 data_received += data.decode()
                 if "\r\n\r\n" in data_received:
+                    data_received.replace("\r\n\r\n", "")
                     hasil = fp.proses_string(data_received)
                     hasil = hasil+"\r\n\r\n"
                     self.connection.sendall(hasil.encode())
+                    break
             else:
                 break
         self.connection.close()
