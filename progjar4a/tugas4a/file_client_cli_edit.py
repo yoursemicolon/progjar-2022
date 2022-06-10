@@ -13,6 +13,7 @@ def send_command(command_str=""):
     logging.warning(f"connecting to {server_address}")
     try:
         logging.warning(f"sending message ")
+        command_str += "\r\n\r\n"
         sock.sendall(command_str.encode())
         # Look for the response, waiting until socket is done (no more data)
         data_received="" #empty string
@@ -67,7 +68,7 @@ def remote_get(filename=""):
 def remote_upload(filename=""):
     fp = open(f"{filename}", 'rb')
     # encode file
-    encodefile = base64.b64encode(fp.read())
+    encodefile = base64.b64encode(fp.read()).decode()
     command_str=f"UPLOAD {filename} {encodefile}"
     hasil = send_command(command_str)
     if(hasil['status'] == 'OK'):
@@ -89,10 +90,10 @@ def remote_delete(filename=""):
 
 if __name__=='__main__':
     server_address=('172.16.16.101',6666)
-    remote_list()
+    # remote_list()
     # remote_get('donalbebek.jpg')
     # remote_get('pokijan.jpg')
     # remote_get('rfc2616.pdf')
     # remote_upload('test_file.txt')
-    # remote_delete('test_file.txt')
+    remote_delete('test_file.txt')
 
